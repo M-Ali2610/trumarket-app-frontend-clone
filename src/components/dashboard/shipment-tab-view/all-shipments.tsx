@@ -18,7 +18,7 @@ interface AllShipmentsProps {
 
 const AllShipments: React.FC<AllShipmentsProps> = ({ shipmentData, status, isBuyer, loading }) => {
   return (
-    <div className="flex flex-col gap-[16px]">
+    <div className="flex flex-col gap-4 px-4 sm:px-0 w-full">
       {loading ? (
         <Loading />
       ) : (

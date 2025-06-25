@@ -21,20 +21,24 @@ const ShipmentInfo: React.FC<ShipmentInfoProps> = ({
   showFlag = false,
 }) => {
   return (
-    <div className="flex  w-auto flex-col gap-[5px]">
-      <p className={classNames("text-[13px] font-bold capitalize leading-[1em] text-tm-black-80", titleClassOverrides)}>
+    <div className="flex w-auto flex-col gap-1 sm:gap-[5px] min-w-0">
+
+      {/* Title */}
+      <p className={classNames("sm:text-[13px] text-xs font-bold capitalize leading-[1em] text-tm-black-80 truncate", titleClassOverrides)}>
         {title}
       </p>
-      <div className={classNames("flex items-center gap-[6px]", valueClassOverrides)}>
+
+      {/* Flag + Value + SubValue */}
+      <div className={classNames("flex flex-wrap items-center gap-2 sm:gap-[6px] min-w-0 text-xs sm:text-sm", valueClassOverrides)}>
         {showFlag ? (
-          <div className="w-[30px]  rounded-[4px]">
-            <Flag code={countryCode} className="h-[20px] rounded-[4px]" />
+          <div className="w-[24px] sm:w-[30px] rounded-[4px] shrink-0">
+            <Flag code={countryCode} className="h-[18px] sm:h-[20px] rounded-[4px]" />
           </div>
         ) : null}
-        <span suppressHydrationWarning className="text-[13px] text-tm-black-80">
+        <span suppressHydrationWarning className="text-tm-black-80 truncate">
           {value}
         </span>
-        <span suppressHydrationWarning className="text-[13px] text-tm-black-80 opacity-60">
+        <span suppressHydrationWarning className="text-tm-black-80 opacity-60 truncate">
           {subValue}
         </span>
       </div>

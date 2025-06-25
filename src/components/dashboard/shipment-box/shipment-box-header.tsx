@@ -148,13 +148,17 @@ const ShipmentBoxHeader: React.FC<ShipmentBoxHeaderProps> = ({
   }, [currentMilestone, milestones, isBuyer]);
 
   return (
-    <div className="border-b border-b-tm-black-20 px-[20px] py-[18px]">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-[6px]">
-          <p className="font-sans text-[15px] font-bold capitalize leading-[1em]  text-tm-black-80">{entityTitle}</p>
+    <div className="border-b border-b-tm-black-20 px-4 sm:px-5 py-4 sm:py-[18px]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+
+        {/* Title */}
+        <div className="flex items-center gap-2">
+          <p className="font-sans text-[15px] sm:text-[16px] font-bold capitalize leading-[1em]  text-tm-black-80">{entityTitle}</p>
           {/* <span className="text-[13px] leading-[1em] text-tm-black-80">#{entityId}</span> */}
         </div>
-        <div className="flex items-center gap-[8px]">
+
+         {/* Badges */}
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           {}
           {renderBadge(isNew && isBuyer, "New", "bg-[#2d3e571a] !text-tm-black-80")}
           {renderBadge(
@@ -169,8 +173,8 @@ const ShipmentBoxHeader: React.FC<ShipmentBoxHeaderProps> = ({
           )}
           {status === DealStatus.Proposal ? (
             <div
-              className={classNames("flex gap-[10px]", {
-                " flex-row-reverse": isBuyer,
+              className={classNames("flex flex-col sm:flex-row gap-1 sm:gap-[10px]", {
+                "flex-row-reverse": isBuyer,
                 "flex-row": !isBuyer,
               })}
             >

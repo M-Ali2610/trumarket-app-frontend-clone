@@ -124,7 +124,7 @@ const SubmitAgreement: React.FC<SubmitAgreementProps> = ({ setSelectedIndex, sel
       setLoading(true);
       await ShipmentService.createShipment(normalizedData);
       toast.success("Shipment agreement created successfully!");
-      router.push("/dashboard");
+      router.push("/dashboard?dummy=true");
       dispatch(resetShipmentAgreementState());
     } catch (err) {
       toast.error("Error during creating shipment agreement!");

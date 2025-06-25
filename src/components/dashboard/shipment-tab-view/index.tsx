@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import Input from "src/components/common/input";
 import Button, { ButtonVariants } from "src/components/common/button";
 import { ShipmentService } from "src/controller/ShipmentAPI.service";
-import { DealStatus } from "src/interfaces/shipment";
+import { DealStatus, ShippingDetails } from "src/interfaces/shipment";
 import { useUserInfo } from "src/lib/hooks/useUserInfo";
 import { AccountTypeEnum } from "src/interfaces/global";
 
@@ -17,6 +17,11 @@ import ActiveShipmentTabView from "./active-shipment-tab-view";
 import PendingShipmentTabView from "./pending-shipment-tab-view";
 import FinishedShipmentTabView from "./finished-shipment-tab-view";
 import AllShipments from "./all-shipments";
+import { ITransportType, MilestoneStatus, MilestoneApprovalStatus } from "src/interfaces/global"
+import { dummyShipment } from "src/constants/mock/dummyShipment";
+
+
+
 
 interface TabViewProps {}
 
@@ -54,15 +59,26 @@ const ShipmentTabView: React.FC<TabViewProps> = () => {
   const dataLength =
     Number(confirmedShipmentList?.length) + Number(pendingShipmentList?.length) + Number(finishedShipmentList?.length);
 
+
+  const shouldShowDummy = router.query.dummy === "true";
+
+const confirmedWithDummy = shouldShowDummy
+  ? [dummyShipment, ...confirmedShipmentList]
+  : confirmedShipmentList;
+
+const allWithDummy = shouldShowDummy
+  ? [dummyShipment, ...confirmedShipmentList, ...pendingShipmentList, ...finishedShipmentList]
+  : [...confirmedShipmentList, ...pendingShipmentList, ...finishedShipmentList];
+
   return (
     <Tab.Group defaultIndex={1} selectedIndex={selectedIndex} onChange={setSelectedIndex}>
       <Tab.List>
 
         {/* Make the container stack vertically on small screens */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 px-4 sm:px-[30px] pb-4 sm:pb-[30px] w-full">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 px-4 sm:px-[8px] pb-4 sm:pb-[8px] w-full">
 
           {/* Tabs (ShipmentTabHeaders) */}
-          <div className="w-full sm:w-auto">
+          <div className="w-full sm:w-auto overflow-x-auto">
             <ShipmentTabHeaders
               all={dataLength || 0}
               active={confirmedShipmentList?.length || 0}
@@ -94,19 +110,19 @@ const ShipmentTabView: React.FC<TabViewProps> = () => {
         <Tab.Panel className={classNames("rounded-[4px] bg-[#ffffff80] p-4 sm:p-[20px]")}>
           <AllShipments
             isBuyer={isBuyer}
-            shipmentData={[...confirmedShipmentList, ...pendingShipmentList, ...finishedShipmentList]}
+            shipmentData={allWithDummy}
             status={DealStatus.All}
             loading={isConfirmedShipmentListLoading || isPendingShipmentListLoading || isFinishedShipmentListLoading}
           />
         </Tab.Panel>
         <Tab.Panel className={classNames("rounded-[4px] bg-[#ffffff80] p-4 sm:p-[20px]")}>
-          <ActiveShipmentTabView isBuyer={isBuyer} shipmentData={confirmedShipmentList} status={DealStatus.Confirmed} />
+          <ActiveShipmentTabView isBuyer={isBuyer} shipmentData={confirmedWithDummy} status={DealStatus.Confirmed} />
         </Tab.Panel>
         <Tab.Panel className={classNames("rounded-[4px] bg-[#ffffff80] p-4 sm:p-[20px]")}>
-          <PendingShipmentTabView isBuyer={isBuyer} shipmentData={pendingShipmentList} status={DealStatus.Proposal} />
+          <PendingShipmentTabView isBuyer={isBuyer} shipmentData={confirmedWithDummy} status={DealStatus.Proposal} />
         </Tab.Panel>
         <Tab.Panel className={classNames("rounded-[4px] bg-[#ffffff80] p-4 sm:p-[20px]")}>
-          <FinishedShipmentTabView isBuyer={isBuyer} shipmentData={finishedShipmentList} status={DealStatus.Finished} />
+          <FinishedShipmentTabView isBuyer={isBuyer} shipmentData={confirmedWithDummy} status={DealStatus.Finished} />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

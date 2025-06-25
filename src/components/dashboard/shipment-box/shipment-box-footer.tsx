@@ -37,8 +37,10 @@ const ShipmentBoxFooter: React.FC<ShipmentBoxFooterProps> = ({
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <div className="flex w-[70%]   items-center px-[20px] py-[19px]">
+      <div className="flex flex-col sm:flex-row justify-between gap-4 px-4 py-4 sm:px-5 sm:py-5">
+
+        {/* Left side: Info Rows */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-wrap w-full sm:w-[70%]">
           <InformationRow
             label={isBuyer ? "Supplier:" : "Buyer:"}
             underlined={false}
@@ -72,9 +74,11 @@ const ShipmentBoxFooter: React.FC<ShipmentBoxFooterProps> = ({
             labelClassOverrides="opacity-80"
           />
         </div>
-        <div className="flex w-[30%] justify-end gap-[10px] pr-[20px]">
+
+        {/* Right side: Buttons */}
+        <div className="flex flex-col sm:flex-row w-full sm:w-[30%] justify-end gap-2 sm:gap-3">
           <Button
-            classOverrides="!px-[20px]"
+            classOverrides="!px-[20px] w-full sm:w-auto"
             variant={ButtonVariants.FILLED_BLUE}
             onClick={() => router.push("/dashboard/create-shipment?cloneShipmentId=" + entityId)}
           >
@@ -86,7 +90,7 @@ const ShipmentBoxFooter: React.FC<ShipmentBoxFooterProps> = ({
             </div>
           </Button>
           <Button classOverrides="!py-[7px] !px-[12px] !min-w-[156px]" onClick={() => action()}>
-            <div className="flex w-full items-center justify-between gap-[13px]">
+            <div className="flex items-center gap-2">
               <p className="text-[13px] font-bold uppercase leading-[1em] text-tm-white">{actionButtonText}</p>
               <ArrowForwardIcon className="!h-[17px] !w-[17px]" />
             </div>

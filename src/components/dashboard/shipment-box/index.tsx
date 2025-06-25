@@ -91,9 +91,11 @@ const ShipmentBox: React.FC<ShipmentBoxProps> = ({
               milestones={shipment.milestones}
               currentMilestone={shipment.currentMilestone}
             />
-            <div className="px-[20px] py-[28px]">
-              <div className="flex items-center px-[40px]">
-                <div className="flex  justify-end text-right">
+            <div className="px-4 sm:px-5 py-5 sm:py-7">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-6">
+
+                {/* Origin Info */}
+                <div className="flex justify-start sm:justify-end text-left sm:text-right">
                   <ShipmentInfo
                     title={`${shipment.portOfOrigin}, ${shipment.origin}`}
                     value={`${moment(shipment.shippingStartDate).format("DD.MM.YYYY")}`}
@@ -103,7 +105,9 @@ const ShipmentBox: React.FC<ShipmentBoxProps> = ({
                     showFlag
                   />
                 </div>
-                <div className="flex-1">
+
+                {/* Horizontal Milestones */}
+                <div className="flex-1 overflow-x-auto">
                   <HorizontalMilestones
                     status={generateMilestoneStatus()}
                     milestones={shipment.milestones}
@@ -113,6 +117,10 @@ const ShipmentBox: React.FC<ShipmentBoxProps> = ({
                     setActive={setActive}
                   />
                 </div>
+
+                {/* Destination Info */}
+
+                <div className="flex justify-start sm:justify-end text-left sm:text-right">
                 <ShipmentInfo
                   title={`${shipment.portOfDestination}, ${shipment.destination}`}
                   value={`${moment(shipment.expectedShippingEndDate).format("DD.MM.YYYY")}`}
@@ -122,9 +130,13 @@ const ShipmentBox: React.FC<ShipmentBoxProps> = ({
                   subValue="ETA"
                   showFlag
                 />
+                </div>
+
               </div>
             </div>
           </Link>
+
+          
           <div className="border-t border-t-tm-black-20">
             <ShipmentBoxFooter
               accountType={accountType}

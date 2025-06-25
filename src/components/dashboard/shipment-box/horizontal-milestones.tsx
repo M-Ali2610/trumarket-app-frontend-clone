@@ -90,7 +90,7 @@ function ColorlibStepIcon(
       <div>
         <div
           className={classNames(
-            "flex h-[40px] max-w-[80px] items-center justify-center gap-[10px] rounded-[4px] px-[10px]",
+            "flex items-center justify-center gap-2 rounded-[4px] px-2 h-10 min-w-[70px] sm:min-w-[80px]",
             milestoneInfoRenderer?.containerClass,
           )}
         >
@@ -118,35 +118,73 @@ export default function HorizontalMilestones({
   transport: ITransportType;
 }) {
   return (
-    <Stack sx={{ width: "100%" }}>
-      <Stepper alternativeLabel activeStep={status} connector={<ColorlibConnector />}>
-        {MilestoneData.map((step) => (
-          <Step key={step.milestone} sx={{ paddingLeft: 0, paddingRight: 0, width: "30px" }}>
-            <StepLabel
-              StepIconComponent={(props) => (
-                // @ts-ignore
-                <ColorlibStepIcon
-                  {...props}
-                  milestoneStatus={milestones[step.milestone]?.approvalStatus}
-                  prevMilestoneStatus={milestones[step.milestone - 1]?.approvalStatus}
-                  nextMilestoneStatus={milestones[step.milestone + 1]?.approvalStatus}
-                  icon={
-                    step.milestone === MilestoneEnum.M5 && transport === ITransportType.BY_AIR ? (
-                      <AirplaneTilt size={26} weight="duotone" />
-                    ) : (
-                      step.icon
-                    )
-                  }
-                  status={status}
-                  isBuyer={isBuyer}
-                  hasNewDocuments={hasNewDocuments}
-                  setActive={setActive}
-                />
-              )}
-            ></StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-    </Stack>
-  );
+  <>
+    {/* Mobile (Vertical Stepper) */}
+    <div className="block sm:hidden w-full">
+      <Stack spacing={3}>
+        {MilestoneData.map((step, index) => {
+          const statusIcon = milestoneStatusFactory(
+            isBuyer,
+            milestones[step.milestone + 1]?.approvalStatus,
+            milestones[step.milestone]?.approvalStatus,
+            hasNewDocuments,
+            status === step.milestone
+          );
+
+          const IconWithStyle = React.cloneElement(
+            step.milestone === MilestoneEnum.M5 && transport === ITransportType.BY_AIR
+              ? <AirplaneTilt size={22} weight="duotone" />
+              : step.icon,
+            {
+              className: classNames("opacity-30", statusIcon?.iconClass),
+            }
+          );
+
+          return (
+            <div key={index} className="flex items-center gap-3">
+              <div className={classNames("flex items-center gap-2 px-2 py-2 rounded-md", statusIcon?.containerClass)}>
+                {IconWithStyle}
+                {statusIcon?.icon}
+              </div>
+              <p className="text-sm font-medium text-tm-black-80">{step.label}</p>
+            </div>
+          );
+        })}
+      </Stack>
+    </div>
+
+    {/* Desktop (Horizontal Stepper) */}
+    <div className="hidden sm:block w-full">
+      <Stack>
+        <Stepper alternativeLabel activeStep={status} connector={<ColorlibConnector />}>
+          {MilestoneData.map((step) => (
+            <Step key={step.milestone} sx={{ px: 1.5, minWidth: "80px" }}>
+              <StepLabel
+                StepIconComponent={(props) => (
+                  // @ts-ignore
+                  <ColorlibStepIcon
+                    {...props}
+                    milestoneStatus={milestones[step.milestone]?.approvalStatus}
+                    prevMilestoneStatus={milestones[step.milestone - 1]?.approvalStatus}
+                    nextMilestoneStatus={milestones[step.milestone + 1]?.approvalStatus}
+                    icon={
+                      step.milestone === MilestoneEnum.M5 && transport === ITransportType.BY_AIR
+                        ? <AirplaneTilt size={26} weight="duotone" />
+                        : step.icon
+                    }
+                    status={status}
+                    isBuyer={isBuyer}
+                    hasNewDocuments={hasNewDocuments}
+                    setActive={setActive}
+                  />
+                )}
+              />
+            </Step>
+          ))}
+        </Stepper>
+      </Stack>
+    </div>
+  </>
+);
+
 }
