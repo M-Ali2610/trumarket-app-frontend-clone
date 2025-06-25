@@ -20,6 +20,7 @@ import VerticalLinearStepper from "./stepper/stepper";
 import SubmitAgreement from "./submit-agreement";
 import CompanyData from "./company-data";
 import { ShipmentService } from "src/controller/ShipmentAPI.service";
+import { AgreementPartyInfo } from "src/interfaces/shipment";
 
 interface CreateShipment {}
 
@@ -238,13 +239,13 @@ const CreateShipment: React.FC<CreateShipment> = () => {
       if (isBuyer) {
         companyData = shipment.buyerCompany;
         otherCompanyData = shipment.supplierCompany;
-        companyParticipants = shipment.buyers.slice(1).map((p) => ({ label: p.email, value: p.email }));
-        otherCompanyParticipants = shipment.suppliers.map((p) => ({ label: p.email, value: p.email }));
+        companyParticipants = shipment.buyers.slice(1).map((p: AgreementPartyInfo) => ({ label: p.email, value: p.email }));
+        otherCompanyParticipants = shipment.suppliers.map((p: AgreementPartyInfo) => ({ label: p.email, value: p.email }));
       } else {
         companyData = shipment.supplierCompany;
         otherCompanyData = shipment.buyerCompany;
-        companyParticipants = shipment.suppliers.slice(1).map((p) => ({ label: p.email, value: p.email }));
-        otherCompanyParticipants = shipment.buyers.map((p) => ({ label: p.email, value: p.email }));
+        companyParticipants = shipment.suppliers.slice(1).map((p: AgreementPartyInfo) => ({ label: p.email, value: p.email }));
+        otherCompanyParticipants = shipment.buyers.map((p: AgreementPartyInfo) => ({ label: p.email, value: p.email }));
       }
 
       dispatch(
