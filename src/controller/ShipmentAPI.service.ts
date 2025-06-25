@@ -53,4 +53,23 @@ export class ShipmentService {
     if (!response.ok) throw new Error("Failed to update shipment");
     return response.json();
   }
+
+  static async markMilestoneDocumentAsSeen(dealId: string, milestoneId: string, documentId: string): Promise<any> {
+  if (USE_MOCK || dealId === "dummy" || dealId === "mock") {
+    return Promise.resolve({ success: true });
+  }
+
+  const response = await fetch(
+    `http://localhost:4000/deals/${dealId}/milestones/${milestoneId}/docs/${documentId}/seen`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+
+  if (!response.ok) throw new Error("Failed to mark document as seen");
+  return response.json();
 }
+
+}
+
