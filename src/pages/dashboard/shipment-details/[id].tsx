@@ -206,8 +206,8 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = () => {
       </Head>
       <div className="py-[30px] ">
         <Container>
-          <div className="mb-[30px] flex items-start justify-between gap-[10px]">
-            <div className="w-[35%]">
+          <div className="mb-6 flex flex-col lg:flex-row gap-4">
+            <div className="w-full lg:w-[35%]">
               <ShipmentDetailsHeader
                 productName={shipmentDetails?.name}
                 userAccountType={accountType}
@@ -217,7 +217,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = () => {
                 }}
               />
             </div>
-            <div className="w-[65%]">
+            <div className="w-full lg:w-[65%]">
               <ShipmentBaseInfo
                 accountType={accountType}
                 emailInfo={isBuyer ? shipmentDetails?.suppliers : shipmentDetails?.buyers}
@@ -247,15 +247,17 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = () => {
               )}
             </div>
           </div>
-          <div className="flex items-start gap-[10px]">
-            <div className="w-[35%] ">
-              <div className="rounded-tl-[4px] rounded-tr-[4px] border-b border-b-tm-black-20 bg-tm-white  px-[30px] py-[25px]">
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className="w-full lg:w-[35%]">
+              <div className="rounded-tl-[4px] rounded-tr-[4px] border-b border-b-tm-black-20 bg-tm-white px-4 py-4">
                 <p className="text-[17px] font-bold leading-[1em] text-tm-black-80">Milestone timeline</p>
               </div>
               <div
                 className="rounded-bl-[4px] rounded-br-[4px] bg-tm-white px-[30px] pb-[44px] pt-[30px]"
                 style={{ minHeight: `${windowHeight - 295}px` }}
               >
+
+                {/* Origin Info */}
                 <div className="flex items-start gap-[10px]">
                   <div className="h-[20px] w-[20px]">
                     <Flag code={getCountryCode(shipmentDetails?.origin as string)} />
@@ -265,7 +267,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = () => {
                     value={`${moment(shipmentDetails?.shippingStartDate).format("DD.MM.YYYY")} | ${moment(shipmentDetails?.shippingStartDate).endOf("day").fromNow()}`}
                   />
                 </div>
-                <div className="py-[8px]">
+                <div className="py-2">
                   <ShipmentMilestoneStatus
                     step={shipmentDetailsCurrentMilestone || 0}
                     milestoneInfo={shipmentDetails?.milestones || []}
@@ -275,6 +277,8 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = () => {
                     transport={shipmentDetails?.transport}
                   />
                 </div>
+
+                {/* Destination Info */}
                 <div className="flex items-start gap-[10px]">
                   <div className="h-[20px] w-[20px]">
                     <Flag code={getCountryCode(shipmentDetails?.destination as string)} />
@@ -286,7 +290,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[65%] rounded-[4px]">
+            <div className="w-full lg:w-[65%] rounded-[4px]">
               <DocumentBoxHeader dealId={query.id as string} refetchShipmentData={refetch} />
               <AttachedDocumentsView
                 currentMilestone={shipmentDetailsCurrentMilestone || 0}

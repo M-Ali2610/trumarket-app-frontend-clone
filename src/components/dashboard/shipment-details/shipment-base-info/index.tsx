@@ -24,8 +24,8 @@ const ShipmentBaseInfo: React.FC<ShipmentBaseInfoProps> = ({
 }) => {
   const isBuyer = accountType === AccountTypeEnum.BUYER;
   return (
-    <div>
-      <div className="flex items-center rounded-[4px] border border-tm-black-20 bg-[#ffffff80] px-[26px]">
+    <div className="w-full">
+      <div className="flex flex-col sm:flex-row sm:items-center flex-wrap gap-y-3 gap-x-4 rounded-[4px] border border-tm-black-20 bg-[#ffffff80] px-4 py-3 sm:px-[26px] sm:py-[14px]">
         <InformationRow
           label={isBuyer ? "Supplier:" : "Buyer:"}
           value={
@@ -45,17 +45,17 @@ const ShipmentBaseInfo: React.FC<ShipmentBaseInfoProps> = ({
           }
           underlined={false}
           showBoldValue={false}
-          containerClassOverrides="py-[10px]"
+          containerClassOverrides="py-[4px]"
         />
-        <InformationRowDivider classOverrides="h-[30px]" />
+        <InformationRowDivider classOverrides="hidden sm:block h-[30px]" />
         <InformationRow
           underlined={false}
           label="Value:"
           value={CurrencyFormatter(value)}
           showBoldValue={false}
-          containerClassOverrides="py-[10px]"
+          containerClassOverrides="py-[4px]"
         />
-        <InformationRowDivider classOverrides="h-[30px]" />
+        <InformationRowDivider classOverrides="hidden sm:block h-[30px]" />
         <InformationRow
           label="Identifier:"
           value={`#${identifier}`}
@@ -65,7 +65,7 @@ const ShipmentBaseInfo: React.FC<ShipmentBaseInfoProps> = ({
         />
         <InformationRowDivider classOverrides="h-[30px]" />
 
-        <div onClick={handleShowAgreement} className="flex cursor-pointer items-center gap-[1px]">
+        <div onClick={handleShowAgreement} className="flex items-center gap-[4px] cursor-pointer">
           <p className="text-[13px] font-medium capitalize leading-[1em] text-tm-black-80">Show Agreement</p>
           <LaunchIcon className="!h-[18px]" />
         </div>

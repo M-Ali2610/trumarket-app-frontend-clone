@@ -27,9 +27,9 @@ const ShipmentDetailsHeader: React.FC<ShipmentDetailsHeaderProps> = ({
   }, []);
 
   return (
-    <div className="px-[30px]">
-      <div className="flex items-center gap-[15px] text-[26px]  leading-[1.2em] tracking-normal text-tm-black-80">
-        <h1 className="font-bold">{productName}</h1>
+    <div className="px-4 sm:px-6 md:px-[30px]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-[15px]">
+        <h1 className="text-xl sm:text-[26px] font-bold leading-[1.2em] text-tm-black-80">{productName}</h1>
         {/* <p className="font-light">#{shipmentNumber}</p> */}
         {publishEnabled &&
           userAccountType === AccountTypeEnum.BUYER &&

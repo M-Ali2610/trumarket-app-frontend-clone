@@ -89,7 +89,7 @@ const ShipmentBoxFooter: React.FC<ShipmentBoxFooterProps> = ({
               <AddCircleIcon className="!h-[15px] !w-[15px] !fill-tm-white" />
             </div>
           </Button>
-          <Button classOverrides="!py-[7px] !px-[12px] !min-w-[156px]" onClick={() => action()}>
+          <Button classOverrides="!py-[7px] !px-[12px] !min-w-[156px]" onClick={() => router.push(`/dashboard/shipment-details/${entityId || "dummy"}`)}>
             <div className="flex items-center gap-2">
               <p className="text-[13px] font-bold uppercase leading-[1em] text-tm-white">{actionButtonText}</p>
               <ArrowForwardIcon className="!h-[17px] !w-[17px]" />

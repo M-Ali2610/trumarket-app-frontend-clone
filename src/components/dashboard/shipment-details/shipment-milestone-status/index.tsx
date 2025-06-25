@@ -48,11 +48,17 @@ function ColorlibStepIcon(
           )}
         ></div>
       ) : null}
-      <div className="relative z-[99] flex w-full justify-between py-[6px] pl-[30px]">
-        <div className={classNames("mt-[2px] flex w-full items-center", active ? "text-tm-white" : "text-tm-black-80")}>
-          <p className="flex-shrink-0 text-[13px] leading-[1.2em]">{label}</p>
-          <p className="mx-[10px] h-[1px] w-full bg-tm-black-20"></p>
+      <div className="relative z-[99] flex w-full justify-between py-[6px] pl-[20px] sm:pl-[30px]">
+        <div
+          className={classNames(
+            "flex flex-col sm:flex-row sm:items-center w-full gap-y-2",
+            active ? "text-tm-white" : "text-tm-black-80"
+          )}
+        >
+          <p className="text-[13px] leading-[1.2em]">{label}</p>
+          <p className="sm:ml-[20px] h-[1px] w-full bg-tm-black-20 hidden sm:block"></p>
         </div>
+
         <div className="flex flex-shrink-0 items-center gap-[10px]">
           <div
             className={classNames(
