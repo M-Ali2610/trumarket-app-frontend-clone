@@ -52,12 +52,17 @@ const AttachedDocumentsView: React.FC<AttachedDocumentsViewProps> = ({
   });
 
   const handleUploadFileToMilestone = async (file: File) => {
+
+      if (!dealId) {
+    toast.error("Missing deal ID. Cannot upload file.");
+    return;
+    }
     try {
       const filesMap = {
         description: file.name,
         file,
       };
-      await ShipmentService.uploadDocToMilestone(filesMap, dealId, milestones[currentMilestone].id);
+      await ShipmentService.uploadDocToMilestone(filesMap, `dealId`, milestones[currentMilestone].id);
     } catch (err) {
       toast.error(`Error while uploading ${file.name} document, please try again!`);
     }
@@ -65,6 +70,7 @@ const AttachedDocumentsView: React.FC<AttachedDocumentsViewProps> = ({
 
   const handleChangeDocumentVisibility = async (docId: string, visibility: boolean) => {
     if (!dealId) return;
+    
 
     try {
       await ShipmentService.updateDocumentVisibility(dealId, milestones[currentMilestone].id, docId, visibility);
