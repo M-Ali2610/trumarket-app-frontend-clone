@@ -85,7 +85,7 @@ const SubmitAgreement: React.FC<SubmitAgreementProps> = ({ setSelectedIndex, sel
     };
 
     if (isBuyer) {
-      const buyerSideParticipants = shipmentFormData.participants.map((participants: any) => participants.value);
+      const buyerSideParticipants = shipmentFormData.participants.map((p: { value: string }) => p.value);
       normalizedData.suppliersEmails = shipmentFormData.addresseeParticipants.map(
         (participants: any) => participants.value,
       );

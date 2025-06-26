@@ -71,5 +71,21 @@ export class ShipmentService {
   return response.json();
 }
 
+  // ✅ ADD THIS METHOD HERE
+  static async createShipment(data: any): Promise<any> {
+    if (USE_MOCK) {
+      return Promise.resolve({ success: true });
+    }
+
+    const response = await fetch("http://localhost:4000/shipments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) throw new Error("Failed to create shipment");
+    return response.json();
+  }
+
 }
 
